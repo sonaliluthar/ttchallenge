@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import assets from "./assets.json";
-import { Button } from "antd";
+import { Button, List } from "antd";
 
 export default class CountNames extends Component {
   constructor(props) {
     super(props);
     this.state = {
       uniqueAssetClassNames: [],
+      classAssets: [],
       clicked: false
     };
   }
@@ -37,19 +37,49 @@ export default class CountNames extends Component {
       let matchedName = this.state.uniqueAssetClassNames[i];
       let matchingAssets = myAssets.filter(asset => {
         for (let j = 0; j < asset.classList.length; j++) {
-          return asset.classList[j].name === matchedName;
+          if (asset.classList[j].name === matchedName) {
+            return true;
+          }
         }
       });
-      classAssets.push({ [matchedName]: matchingAssets });
+      matchingAssets = matchingAssets.map(asset => asset.name);
+      classAssets.push({ className: matchedName, assets: matchingAssets });
     }
+    this.setState({ classAssets: classAssets, clicked: true });
+  };
+
+  closeList = () => {
+    this.setState({ clicked: false });
   };
 
   render() {
     return (
       <div>
-        {" "}
-        Number of Unique Class Names: {this.state.uniqueAssetClassNames.length}
-        <Button onClick={this.filterClasses}>Show me the Class!</Button>
+        <div>
+          Number of Unique Class Names:{" "}
+          {this.state.uniqueAssetClassNames.length}
+        </div>
+        <div>
+          <Button onClick={this.filterClasses}>
+            Assets associated with each class
+          </Button>
+          {this.state.clicked ? (
+            <Button onClick={this.closeList}>Close</Button>
+          ) : null}
+          {this.state.clicked
+            ? this.state.classAssets.map(myClass => (
+                <List
+                  size="small"
+                  header={
+                    <div className="list-header">{myClass.className}</div>
+                  }
+                  bordered
+                  dataSource={myClass.assets}
+                  renderItem={item => <List.Item>{item}</List.Item>}
+                />
+              ))
+            : null}
+        </div>
       </div>
     );
   }
