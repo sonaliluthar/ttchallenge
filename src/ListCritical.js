@@ -4,6 +4,7 @@ import { Button, List } from "antd";
 export default class ListCritical extends Component {
   constructor(props) {
     super(props);
+    // create state variable to hold list of critical assets
     this.state = {
       criticalAssets: [],
       clicked: false
@@ -13,6 +14,8 @@ export default class ListCritical extends Component {
   componentDidMount() {
     let data = require("./assets.json");
     let critAssets = this.state.criticalAssets;
+
+    // checks each asset with for loop and adds critical assets to array
     for (let i = 0; i < data.assets.length; i++) {
       let asset = data.assets[i];
       if (asset.status === 3) {
@@ -22,10 +25,12 @@ export default class ListCritical extends Component {
     this.setState({ criticalAssets: critAssets });
   }
 
+  // displays critical assets
   onClick = () => {
     this.setState({ clicked: true });
   };
 
+  // closes display
   closeCrit = () => {
     this.setState({ clicked: false });
   };
