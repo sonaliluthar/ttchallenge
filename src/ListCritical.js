@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import assets from "./assets.json";
-import { Button } from "antd";
+import { Button, List } from "antd";
 
 export default class ListCritical extends Component {
   constructor(props) {
@@ -37,7 +36,7 @@ export default class ListCritical extends Component {
         <Button onClick={this.onClick}>List Critical Assets</Button>
         {this.state.clicked ? (
           <div>
-            {this.state.criticalAssets.map((asset, index) => asset.name)}
+            {this.state.criticalAssets.map(asset => asset.name + ", ")}
             <Button onClick={this.closeCrit}>Close</Button>
           </div>
         ) : null}

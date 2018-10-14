@@ -7,15 +7,13 @@ import CountNames from "./CountNames.js";
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <div>
-            <ListCritical />
-            <CountNames />
-          </div>
-        </header>
+      <span className="App">
+        <div>
+          <ListCritical />
+          <CountNames />
+        </div>
         <Asset />
-      </div>
+      </span>
     );
   }
 }
