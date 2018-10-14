@@ -27,11 +27,29 @@ export default class CountNames extends Component {
     this.setState({ uniqueAssetClassNames: unique });
   }
 
+  filterClasses = () => {
+    let myAssets = require("./assets.json").assets.filter(asset => {
+      return asset.classList.length > 0;
+    });
+    let classAssets = [];
+
+    for (let i = 0; i < this.state.uniqueAssetClassNames.length; i++) {
+      let matchedName = this.state.uniqueAssetClassNames[i];
+      let matchingAssets = myAssets.filter(asset => {
+        for (let j = 0; j < asset.classList.length; j++) {
+          return asset.classList[j].name === matchedName;
+        }
+      });
+      classAssets.push({ [matchedName]: matchingAssets });
+    }
+  };
+
   render() {
     return (
       <div>
         {" "}
         Number of Unique Class Names: {this.state.uniqueAssetClassNames.length}
+        <Button onClick={this.filterClasses}>Show me the Class!</Button>
       </div>
     );
   }
